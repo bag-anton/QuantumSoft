@@ -26,8 +26,7 @@ class DBTreeView(APIView):
         node = db_tree.get_node_by_id(request.data['node_id'])
         cached_tree.add_node(node)
 
-        result = exporter.export(cached_tree.tree)
-        return Response(data=result)
+        return Response(data=exporter.export(cached_tree.tree))
 
     def get(self, request):
         """
@@ -38,8 +37,10 @@ class DBTreeView(APIView):
         cached_tree = CachedTree()
         for node in PreOrderIter(cached_tree.tree):
             self.save(node, db_tree)
-        result = exporter.export(db_tree.tree)
-        return Response(data=result)
+        cached_tree.reset()
+        return Response(
+            data=exporter.export(db_tree.tree)
+        )
 
     def save(self, cached_node: Node, db_tree: DBTree):
         db_node = db_tree.get_node_by_id(cached_node.id)

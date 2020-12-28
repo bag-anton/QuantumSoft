@@ -32,20 +32,19 @@ class Ui(QtWidgets.QMainWindow, Form):
     def save(self):
         db_tree = self.send_request('GET', DB_URL)
         self.fill_widget(self.treeWidget_2, db_tree)
+        self.fill_widget(self.treeWidget)
 
     def add_node(self):
-        parent_id = None
         index = (
             self.treeWidget.selectedIndexes()[0]
             if len(self.treeWidget.selectedIndexes())
             else None
         )
-        if index:
-            node = self.treeWidget.itemFromIndex(index)
-            parent_id = node.id
         value = self.textEdit.toPlainText()
-        if not value:
+        if not index or not value:
             return
+        node = self.treeWidget.itemFromIndex(index)
+        parent_id = node.id
         body = {'parent_id': parent_id, 'value': value}
         cache_tree = self.send_request('POST', CACHE_URL, body)
         self.fill_widget(self.treeWidget, cache_tree)

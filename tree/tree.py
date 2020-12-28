@@ -30,14 +30,15 @@ class Tree:
         node_id = node_id if node_id else uuid4().int
         parent_node = self.get_node_by_id(parent_id)
         parent_node = parent_node if parent_node else self.tree
-        Node(
-            node_id,
-            value=value,
-            parent_id=parent_id,
-            parent=parent_node,
-            children=children,
-            is_deleted=is_deleted,
-        )
+        if not parent_node.is_deleted:
+            Node(
+                node_id,
+                value=value,
+                parent_id=parent_id,
+                parent=parent_node,
+                children=children,
+                is_deleted=is_deleted,
+            )
 
     def get_node_by_id(self, node_id: int) -> Node:
         return search.find(self.tree, lambda node: node.id == node_id)

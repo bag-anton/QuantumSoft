@@ -1,14 +1,14 @@
 # Test Task
 ### Python version is 3.7
 ## For start project:
-* create virtual environment
-* export pythonpath:
+1) create virtual environment
+2) export pythonpath:
     * ```export PYTHONPATH=$(pwd)```
-* install requirements:  
+3) install requirements:  
     * ```pip install -r requirements.txt```
-* run web app:    
+4) run web app:    
     * ```python manage.py runserver 8000 --settings=QuantumSoft.settings```
-* run pyqt app:
+5) run pyqt app:
     * ```cd visual```
     * ```python run.py```
-* enjoy
+6) enjoy
