@@ -32,7 +32,6 @@ class Ui(QtWidgets.QMainWindow, Form):
     def save(self):
         db_tree = self.send_request('GET', DB_URL)
         self.fill_widget(self.treeWidget_2, db_tree)
-        self.fill_widget(self.treeWidget)
 
     def add_node(self):
         index = (

@@ -37,7 +37,6 @@ class DBTreeView(APIView):
         cached_tree = CachedTree()
         for node in PreOrderIter(cached_tree.tree):
             self.save(node, db_tree)
-        cached_tree.reset()
         return Response(
             data=exporter.export(db_tree.tree)
         )
