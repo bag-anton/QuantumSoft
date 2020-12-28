@@ -20,9 +20,8 @@ class Node(NodeMixin):
         self.is_deleted: bool = is_deleted
 
     def change_node_value(self, value: str):
-        if self.is_deleted is True:
-            return
-        self.value = value
+        if not self.is_deleted:
+            self.value = value
 
     def mark_as_deleted(self):
         self.is_deleted = True
