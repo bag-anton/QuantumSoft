@@ -2,8 +2,15 @@ from anytree import NodeMixin
 
 
 class Node(NodeMixin):
-    def __init__(self, id: int, value: str, parent_id: int = None,
-                 parent=None, children=tuple(), is_deleted=False):
+    def __init__(
+        self,
+        id: int,
+        value: str,
+        parent_id: int = None,
+        parent=None,
+        children=tuple(),
+        is_deleted=False,
+    ):
         super(Node, self).__init__()
         self.id: int = id
         self.parent_id: int = parent_id if parent_id else None

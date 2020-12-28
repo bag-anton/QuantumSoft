@@ -1,8 +1,8 @@
 from anytree import search
 
-from .decorators import singleton
-from .node import Node
-from .tree import Tree
+from tree.decorators import singleton
+from tree.node import Node
+from tree.tree import Tree
 
 
 @singleton

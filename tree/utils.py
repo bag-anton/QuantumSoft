@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from .node import Node
+from tree.node import Node
 
 
 def generate_default_tree(root):

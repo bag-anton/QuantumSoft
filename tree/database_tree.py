@@ -1,6 +1,6 @@
-from .decorators import singleton
-from .tree import Tree
-from .utils import generate_default_tree
+from tree.decorators import singleton
+from tree.tree import Tree
+from tree.utils import generate_default_tree
 
 
 @singleton
