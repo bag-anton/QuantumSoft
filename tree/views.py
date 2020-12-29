@@ -24,8 +24,9 @@ class DBTreeView(APIView):
             return Response(data=result)
 
         node = db_tree.get_node_by_id(request.data['node_id'])
-        cached_tree.add_node(node)
-
+        new_node = cached_tree.add_node(node)
+        if new_node.is_deleted:
+            cached_tree.delete_node(node.id)
         return Response(data=exporter.export(cached_tree.tree))
 
     def get(self, request):
@@ -35,10 +36,12 @@ class DBTreeView(APIView):
         exporter = DictExporter()
         db_tree = DBTree()
         cached_tree = CachedTree()
-        for node in PreOrderIter(cached_tree.tree):
-            self.save(node, db_tree)
+        for cache_node in PreOrderIter(cached_tree.tree):
+            db_node = self.save(cache_node, db_tree)
+            cache_node.is_deleted = db_node.is_deleted
         return Response(
-            data=exporter.export(db_tree.tree)
+            data={"db_tree": exporter.export(db_tree.tree),
+                  "cached_tree": exporter.export(cached_tree.tree)}
         )
 
     def save(self, cached_node: Node, db_tree: DBTree):
@@ -48,12 +51,13 @@ class DBTreeView(APIView):
             if cached_node.is_deleted:
                 db_tree.delete_node(db_node.id)
         else:
-            db_tree.create_node(
+            db_node = db_tree.create_node(
                 cached_node.parent_id,
                 cached_node.value,
                 cached_node.id,
                 is_deleted=cached_node.is_deleted,
             )
+        return db_node
 
 
 class CachedTreeView(APIView):

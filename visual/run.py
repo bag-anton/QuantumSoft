@@ -30,8 +30,9 @@ class Ui(QtWidgets.QMainWindow, Form):
         self.pushButton_5.clicked.connect(self.save)
 
     def save(self):
-        db_tree = self.send_request('GET', DB_URL)
-        self.fill_widget(self.treeWidget_2, db_tree)
+        response = self.send_request('GET', DB_URL)
+        self.fill_widget(self.treeWidget_2, response['db_tree'])
+        self.fill_widget(self.treeWidget, response['cached_tree'])
 
     def add_node(self):
         index = (

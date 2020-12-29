@@ -18,4 +18,5 @@ class CachedTree(Tree):
 
     def add_node(self, node: Node):
         children = self.find_children(node.id)
-        self.create_node(node.parent_id, node.value, node.id, children)
+        new_node = self.create_node(node.parent_id, node.value, node.id, children)
+        return new_node
